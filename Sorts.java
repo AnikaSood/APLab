@@ -1,11 +1,14 @@
 
 public class Sorts {
-	 enum ListType {Standard, Bubble, Insert};
+	 enum ListType {Standard, Bubble, Selection, Insert};
 	    ListType listType = ListType.Standard;
 	    
 	    private int[] list;
 	    private int[] blist; int bcompares = 0; int bswaps = 0;
 	    private int[] ilist; int icompares = 0; int iswaps = 0;
+	    private int[] slist; int scompares = 0; int sswaps = 0; 
+	    
+	    
 
 	    /**
 	     * Constructor for objects of class isort
@@ -19,6 +22,8 @@ public class Sorts {
 	            
 	        blist = list.clone();
 	        this.BubbleSort();
+	        slist = list.clone();
+	        this.SelectionSort();
 	        ilist = list.clone();
 	        this.InsertionSort();
 	    }
@@ -38,6 +43,13 @@ public class Sorts {
 	                  + " Swaps: " + this.bswaps);
 	                list = this.blist;
 	                break;
+	            case Selection:
+	            	System.out.println("Selection Sort --"
+	            			+ " Operations:" + (this.scompares + this.sswaps)
+	            			+ " Compares: " + this.scompares
+	            			+ " Swaps: " + this.sswaps);
+	            	list = this.slist;
+	            	break;
 	            case Insert:
 	            default:
 	                System.out.println("Insertions Sort -- "
@@ -105,6 +117,34 @@ public class Sorts {
 	        
 	        return ilist;
 	    }
+	    
+	    //Selection Sort 
+	    private int[] SelectionSort() {
+	    	
+	    	int i, j, min, temp;
+	    	
+	    	for(i = 0; i<slist.length-1; i++) //traverse through whole list (except the last number)
+	    	{
+	    		min = i;
+	    		
+	    		for(j = i+1; j<slist.length; j++) //j is always one ahead of i
+	    		{
+	    			scompares++; //counts number of compares
+	    			if(slist[j] < slist[min])
+	    			{
+	    				min = j;
+	    			}
+	    		}
+	    		
+	    		temp =  slist[i];
+	    		slist[i]= slist[min];
+	    		slist[min] = temp;
+	    		sswaps++;
+	    		
+	    	}
+	    	
+	    	return slist;
+	    }
 
 	    /**
 	     *
@@ -117,6 +157,10 @@ public class Sorts {
 	        
 	        // Bubble Sort
 	        is.listType = ListType.Bubble;
+	        System.out.println(is);
+	        
+	        //Selection Sort
+	        is.listType = ListType.Selection;
 	        System.out.println(is);
 	        
 	        // Insertion Sort
